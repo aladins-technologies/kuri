@@ -38,6 +38,9 @@ public class Org extends DateAudit {
     @Column(length = 50)
     private String state;
 
+    @Column(length = 50)
+    private String country;
+
     @Column(length = 10)
     private String zipCode;
 
