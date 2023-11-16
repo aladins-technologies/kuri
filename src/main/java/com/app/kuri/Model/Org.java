@@ -1,7 +1,9 @@
 package com.app.kuri.Model;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -9,8 +11,10 @@ import java.util.UUID;
 
 @Data
 @Entity
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode(callSuper = true)
 @Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"orgName", "schema"})})
 public class Org extends DateAudit {
 

@@ -13,16 +13,21 @@ public class OrgService {
     @Autowired
     private OrgRepository orgRepo;
 
-    public Org saveOrg(OrgDto org){
+    public Org transform(String schema, OrgDto org){
+        return Org.builder()
+            .orgName(org.getOrgName())
+            .address(org.getAddress())
+            .schema(schema)
+            .build();
+    }
+
+    public Org createOrg(String schema, OrgDto org){
         if(org.getOrgName() == null || org.getOrgName().length() < 3){
             throw new OrgException("Please provide a valid name for Organization");
         } else if(org.getAddress() == null || org.getAddress().length() <= 5){
             throw new OrgException("Please provide a valid address for Organization");
-        } else if(org.getSchema() == null || org.getSchema().length() < 3){
-            throw new OrgException("Please provide a valid Schema for Organization");
         }
 
-        Org newOrg = new Org();
-        return newOrg;
+        return orgRepo.save(transform(schema, org));
     }
 }

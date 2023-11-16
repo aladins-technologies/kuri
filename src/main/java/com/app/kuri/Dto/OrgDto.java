@@ -3,12 +3,6 @@ package com.app.kuri.Dto;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import java.util.UUID;
-
 @Getter
 @Setter
 public class OrgDto {
@@ -26,6 +20,5 @@ public class OrgDto {
     private String taxId;
     private String field1;
     private String field2;
-    private String schema;
     private boolean isActive;
 }
