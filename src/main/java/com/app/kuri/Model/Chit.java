@@ -7,6 +7,9 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.UUID;
@@ -40,36 +43,46 @@ public class Chit extends DateAudit {
     @Column(updatable = false, nullable = false)
     private Long id;
 
+    @NotEmpty(message = "Name cannot be empty")
+    @Size(min = 3, message = "Name must contain at least 3 letters")
     @Column(length = 100, nullable = false)
     private String chitName;
 
     private String description;
 
+    @NotEmpty(message = "Chit type cannot be empty")
     @Column(nullable = false)
     private Type type;
 
+    @NotEmpty(message = "Scheme cannot be empty")
     @Column(nullable = false)
     private Scheme scheme;
 
     @Column(nullable = false)
-    private LocalDate startDate;                //first draw date
+    private LocalDate startDate;                //first draw date, can be a past date to add already running chits
 
-    private LocalDate nextDrawDate;             //calculated based on startDate and Scheme
+    @Column(updatable = true)
+    private LocalDate nextDrawDate;             //calculated based on startDate and Scheme, updated after a draw
 
-    @Column(nullable = false)
-    private BigDecimal divisionAmount;          //payable by each member in a period
+    @Column(nullable = false, updatable = true)
+    private BigDecimal divisionAmount;          //payable by each member in a period, updated after a draw if type is auction
 
     @Column(nullable = false, columnDefinition = "Decimal(10,2) default '0.00'")
     private BigDecimal profitStrategy;          //0 - no profit, 0.5 - Half of divisionAmount, 1 - equal to divisionAmount ...
 
+    @Column(updatable = true)
     private int[] profitTenures;                //tenures for profit collection
 
+    @Column(updatable = true)
     private BigDecimal profitAmount;            //total profit amount from this chit
 
+    @Column(updatable = true)
     private int numberOfMembers;                //Calculated after adding members
 
+    @Column(updatable = true)
     private int numberOfTenures;                //calculated from profitTenures and numberOfMembers
 
+    @Column(updatable = true)
     private BigDecimal priceAmount;             //calculated from divisionAmount and numberOfMembers
 
     @Column(nullable = false)

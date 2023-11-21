@@ -1,30 +1,64 @@
 package com.app.kuri.Exception;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.validation.ConstraintViolationException;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import com.app.kuri.Utils.ApiResponse;
+import com.app.kuri.Utils.CustomHttpStatus;
+
 @ControllerAdvice
 public class KuriExceptionHandler{
 
-    @ExceptionHandler(KuriException.class)
-    public ResponseEntity<?> kuriExceptionHandler(KuriException e){
-        return new ResponseEntity<>(e.getErrorMsg(), HttpStatus.INTERNAL_SERVER_ERROR);
-    }
-
     @ExceptionHandler(UserException.class)
-    public ResponseEntity<?> userExceptionHandler(UserException e){
-        return new ResponseEntity<>(e.getErrorMsg(), HttpStatus.BAD_REQUEST);
+    public ResponseEntity<ApiResponse> userExceptionHandler(UserException e){
+        Map<String, Object> data = new HashMap<String, Object>();
+        data.put("message", e.getErrorMsg());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ApiResponse(data, "failed", CustomHttpStatus.FAILED.asStatus()));
     }
 
     @ExceptionHandler(OrgException.class)
-    public ResponseEntity<?> orgExceptionHandler(OrgException e){
-        return new ResponseEntity<>(e.getErrorMsg(), HttpStatus.BAD_REQUEST);
+    public ResponseEntity<ApiResponse> orgExceptionHandler(OrgException e){
+        Map<String, Object> data = new HashMap<String, Object>();
+        data.put("message", e.getErrorMsg());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ApiResponse(data, "failed", CustomHttpStatus.FAILED.asStatus()));
     }
 
     @ExceptionHandler(ChitException.class)
-    public ResponseEntity<?> chitExceptionHandler(ChitException e){
-        return new ResponseEntity<>(e.getErrorMsg(), HttpStatus.BAD_REQUEST);
+    public ResponseEntity<ApiResponse> chitExceptionHandler(ChitException e){
+        Map<String, Object> data = new HashMap<String, Object>();
+        data.put("message", e.getErrorMsg());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ApiResponse(data, "failed", CustomHttpStatus.FAILED.asStatus()));
+    }
+
+
+    @ExceptionHandler(KuriException.class)
+    public ResponseEntity<ApiResponse> kuriExceptionHandler(KuriException e){
+        Map<String, Object> data = new HashMap<String, Object>();
+        data.put("message", e.getErrorMsg());
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ApiResponse(data, "failed", CustomHttpStatus.FAILED.asStatus()));
+    }
+
+
+    @ExceptionHandler(ConstraintViolationException.class)
+    public ResponseEntity<ApiResponse> constraintViolationExceptionHandler(ConstraintViolationException e){
+        Map<String, Object> data = new HashMap<String, Object>();
+        data.put("message", e.getMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ApiResponse(data, "failed", CustomHttpStatus.FAILED.asStatus()));
+    }
+
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<ApiResponse> exceptionHandler(Exception e){
+        //   Sentry.captureException(ex);
+        Map<String, Object> data = new HashMap<String, Object>();
+        data.put("message", e.getMessage());
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ApiResponse(data, "failed", CustomHttpStatus.FAILED.asStatus()));
     }
 }
