@@ -1,18 +1,24 @@
 package com.app.kuri.Model;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.util.UUID;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-
-import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Size;
-
-import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.util.UUID;
 
 @Data
 @Entity
@@ -67,7 +73,7 @@ public class Chit extends DateAudit {
     @Column(nullable = false, updatable = true)
     private BigDecimal divisionAmount;          //payable by each member in a period, updated after a draw if type is auction
 
-    @Column(nullable = false, columnDefinition = "Decimal(10,2) default '0.00'")
+    @Column(nullable = false)                   //@Column(nullable = false, columnDefinition = "DECIMAL(10,2) DEFAULT '0.00'") TODO
     private BigDecimal profitStrategy;          //0 - no profit, 0.5 - Half of divisionAmount, 1 - equal to divisionAmount ...
 
     @Column(updatable = true)
@@ -94,6 +100,6 @@ public class Chit extends DateAudit {
     @Column(nullable = false, length = 50)
     private String schema;
 
-    @Column(nullable = false, columnDefinition = "boolean default true")
+    @Column(nullable = false, columnDefinition = "BOOLEAN DEFAULT true")
     private boolean isActive;
 }

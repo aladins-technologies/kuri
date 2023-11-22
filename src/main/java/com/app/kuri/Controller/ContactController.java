@@ -22,6 +22,11 @@ public class ContactController {
     @Autowired
     private ContactService contactService;
 
+    @GetMapping("/welcome")
+    public String welcome(){
+        return "Welcome to the Application!";
+    }
+
     @GetMapping
     public ResponseEntity<ApiResponse> contactInfo(@RequestHeader("X-TenantSchema") String schema, @RequestParam(value = "id", required = false) Long id){
         Map<String, Object> data = new HashMap<String, Object>();

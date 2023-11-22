@@ -1,6 +1,6 @@
 package com.app.kuri.Config;
 
-import org.springdoc.core.GroupedOpenApi;
+import org.springdoc.core.models.GroupedOpenApi;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -15,6 +15,8 @@ public class OpenApiConfig implements WebMvcConfigurer {
             .packagesToScan("com.app.kuri.Controller")
             .build();
     }
+
+
     
 
 }
