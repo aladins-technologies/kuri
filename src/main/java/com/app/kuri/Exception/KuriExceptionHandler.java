@@ -3,8 +3,6 @@ package com.app.kuri.Exception;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.validation.ConstraintViolationException;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -12,6 +10,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import com.app.kuri.Utils.ApiResponse;
 import com.app.kuri.Utils.CustomHttpStatus;
+
+import jakarta.validation.ConstraintViolationException;
 
 @ControllerAdvice
 public class KuriExceptionHandler{

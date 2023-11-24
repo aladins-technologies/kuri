@@ -13,7 +13,6 @@ import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -41,7 +40,7 @@ public class Chit extends DateAudit {
         ONCE_IN_TWO_MONTHS
     }
 
-    @Column(columnDefinition = "VARCHAR(225)", unique = true)
+    @Column(unique = true)                                            //@Column(columnDefinition = "VARCHAR(36)", unique = true)
     private final UUID uuid = UUID.randomUUID();
 
     @Id
@@ -73,10 +72,10 @@ public class Chit extends DateAudit {
     @Column(nullable = false, updatable = true)
     private BigDecimal divisionAmount;          //payable by each member in a period, updated after a draw if type is auction
 
-    @Column(nullable = false)                   //@Column(nullable = false, columnDefinition = "DECIMAL(10,2) DEFAULT '0.00'") TODO
+    @Column(precision = 10, scale = 2, columnDefinition = "NUMERIC(10,2) DEFAULT 0.00")
     private BigDecimal profitStrategy;          //0 - no profit, 0.5 - Half of divisionAmount, 1 - equal to divisionAmount ...
 
-    @Column(updatable = true)
+    @Column(updatable = true, columnDefinition = "INTEGER[]")
     private int[] profitTenures;                //tenures for profit collection
 
     @Column(updatable = true)

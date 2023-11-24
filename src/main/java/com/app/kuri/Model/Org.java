@@ -1,11 +1,5 @@
 package com.app.kuri.Model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-
 import java.util.UUID;
 
 import jakarta.persistence.Column;
@@ -19,6 +13,11 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 @Data
 @Entity
@@ -29,7 +28,7 @@ import jakarta.validation.constraints.Size;
 @Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"orgName", "schema"})})
 public class Org extends DateAudit {
 
-    @Column(columnDefinition = "VARCHAR(225)", unique = true)
+    @Column(unique = true)                                                        //@Column(columnDefinition = "VARCHAR(36)", unique = true)
     private final UUID uuid = UUID.randomUUID();
 
     @Id
