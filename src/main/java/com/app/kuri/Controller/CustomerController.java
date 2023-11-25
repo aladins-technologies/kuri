@@ -29,6 +29,6 @@ public class CustomerController {
     public ResponseEntity<ApiResponse> createCustomer(@RequestHeader("X-TenantSchema") String schema, @Valid @RequestBody CustomerDto customerDto) {
         Map<String, Object> data = new HashMap<String, Object>();
         data.put("data", customerService.createCustomer(schema, customerDto));
-        return ResponseEntity.ok(new ApiResponse(data, "org created", CustomHttpStatus.SUCCESS.asStatus()));
+        return ResponseEntity.ok(new ApiResponse(data, "New user registered successfully!", CustomHttpStatus.SUCCESS.asStatus()));
     }
 }
