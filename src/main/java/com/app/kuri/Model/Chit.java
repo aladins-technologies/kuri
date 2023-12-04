@@ -1,18 +1,23 @@
 package com.app.kuri.Model;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.util.UUID;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-
-import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Size;
-
-import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.util.UUID;
 
 @Data
 @Entity
@@ -20,7 +25,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-@Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"chitName", "schema"})})
+@Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"name", "schema"})})
 public class Chit extends DateAudit {
 
     public enum Type{
@@ -35,18 +40,18 @@ public class Chit extends DateAudit {
         ONCE_IN_TWO_MONTHS
     }
 
-    @Column(columnDefinition = "VARCHAR(225)", unique = true)
+    @Column(unique = true)                                            //@Column(columnDefinition = "VARCHAR(36)", unique = true)
     private final UUID uuid = UUID.randomUUID();
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(updatable = false, nullable = false)
-    private Long id;
+    private Long chit_id;
 
     @NotEmpty(message = "Name cannot be empty")
     @Size(min = 3, message = "Name must contain at least 3 letters")
     @Column(length = 100, nullable = false)
-    private String chitName;
+    private String name;
 
     private String description;
 
@@ -67,10 +72,10 @@ public class Chit extends DateAudit {
     @Column(nullable = false, updatable = true)
     private BigDecimal divisionAmount;          //payable by each member in a period, updated after a draw if type is auction
 
-    @Column(nullable = false, columnDefinition = "Decimal(10,2) default '0.00'")
+    @Column(precision = 10, scale = 2, columnDefinition = "NUMERIC(10,2) DEFAULT 0.00")
     private BigDecimal profitStrategy;          //0 - no profit, 0.5 - Half of divisionAmount, 1 - equal to divisionAmount ...
 
-    @Column(updatable = true)
+    @Column(updatable = true, columnDefinition = "INTEGER[]")
     private int[] profitTenures;                //tenures for profit collection
 
     @Column(updatable = true)
@@ -94,6 +99,6 @@ public class Chit extends DateAudit {
     @Column(nullable = false, length = 50)
     private String schema;
 
-    @Column(nullable = false, columnDefinition = "boolean default true")
+    @Column(nullable = false, columnDefinition = "BOOLEAN DEFAULT true")
     private boolean isActive;
 }

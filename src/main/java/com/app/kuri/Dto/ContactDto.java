@@ -5,9 +5,8 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class OrgDto {
-    private Long org_id;
-    private String name;
+public class ContactDto {
+    private String orgName;
     private String description;
     private byte[] logo;
     private String address;
@@ -20,5 +19,4 @@ public class OrgDto {
     private String taxId;
     private String field1;
     private String field2;
-    private boolean isActive;
 }
