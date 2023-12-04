@@ -1,3 +1,4 @@
 DB_PASSWORD=soothran
 DB_URL=localhost:5432/kuri
 DB_USERNAME=postgres
+ACTIVE_PROFILE=dev

@@ -25,7 +25,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-@Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"orgName", "schema"})})
+@Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"name", "schema"})})
 public class Org extends DateAudit {
 
     @Column(unique = true)                                                        //@Column(columnDefinition = "VARCHAR(36)", unique = true)
@@ -34,12 +34,12 @@ public class Org extends DateAudit {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(updatable = false, nullable = false)
-    private Long id;
+    private Long org_id;
 
     @NotEmpty(message = "Name cannot be empty")
     @Size(min = 3, message = "Name must contain at least 3 letters")
     @Column(length = 100, nullable = false)
-    private String orgName;
+    private String name;
 
     private String description;
 

@@ -6,8 +6,8 @@ import lombok.Setter;
 @Getter
 @Setter
 public class OrgDto {
-    private Long id;
-    private String orgName;
+    private Long org_id;
+    private String name;
     private String description;
     private byte[] logo;
     private String address;

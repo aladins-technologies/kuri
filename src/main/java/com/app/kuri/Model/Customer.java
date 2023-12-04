@@ -1,30 +1,37 @@
 package com.app.kuri.Model;
 
+import java.util.Set;
 import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
+@Setter
+@Getter
 @Entity
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = true)
+@Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"email", "schema"})})
 public class Customer extends DateAudit{
 
     @Column(unique = true)
@@ -33,12 +40,16 @@ public class Customer extends DateAudit{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(updatable = false, nullable = false)
-    private Long id;
+    private Long customer_id;
 
     @NotEmpty(message = "Name cannot be empty")
     @Size(min = 3, message = "Name must contain at least 3 letters")
     @Column(length = 100, nullable = false)
-    private String customerName;
+    private String name;
+
+    @JsonIgnore
+    @OneToMany(mappedBy="customer", fetch=FetchType.EAGER)
+    private Set<Authority> authorities;
 
     private String description;
 
@@ -69,9 +80,10 @@ public class Customer extends DateAudit{
     private String email;
 
     @JsonIgnore
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
-    @Column(length = 10)                                                                //TODO make this as Enum
+    @Column(length = 10)
     private String role;
 
     @Column(length = 50)
@@ -86,5 +98,4 @@ public class Customer extends DateAudit{
 
     @Column(nullable = false, columnDefinition = "BOOLEAN DEFAULT true")
     private boolean isActive;
-    
 }

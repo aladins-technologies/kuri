@@ -1,13 +1,15 @@
 package com.app.kuri.Dto;
 
+import java.util.Set;
+
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
 public class CustomerDto {
-    private Long id;
-    private String customerName;
+    private Long customer_id;
+    private String name;
     private String description;
     private String address;
     private String city;
@@ -23,4 +25,5 @@ public class CustomerDto {
     private String field2;
     private String schema;
     private boolean isActive;
+    private Set<String> authorities;
 }
